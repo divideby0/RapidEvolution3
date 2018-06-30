@@ -7,9 +7,13 @@ buildscript {
     }
 }
 
-group 'com.github.divideby0'
+group = 'com.github.divideby0'
 // based on https://github.com/djqualia/RapidEvolution3/ (beta 73)
 version '3.73.1'
+
+plugins {
+    id "com.github.johnrengelman.shadow" version "2.0.4"
+}
 
 apply plugin 'com.github.johnrengelman.shadow:2.0.4'
 apply plugin 'java'
@@ -38,17 +42,22 @@ dependencies {
     compile fileTree(dir: 'lib/tagging', include: '*.jar')
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId project.group
-            artifactId project.name
-            version project.version
-            from components.java
-            artifact sourceJar {
-                classifier "sources"
-            }
-            artifact shadowJar
-        }
-    }
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+shadowJar {
+    archiveName = "$baseName-$version.$extension"
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+    archives shadowJar
 }
