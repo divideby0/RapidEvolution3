@@ -7,10 +7,6 @@ buildscript {
     }
 }
 
-group = 'com.github.divideby0'
-// based on https://github.com/djqualia/RapidEvolution3/ (beta 73)
-version '3.73.1'
-
 plugins {
     id "com.github.johnrengelman.shadow" version "2.0.4"
 }
