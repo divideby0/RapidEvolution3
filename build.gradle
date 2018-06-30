@@ -1,0 +1,52 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+    }
+}
+
+plugins {
+  id 'com.github.johnrengelman.shadow' version '2.0.4'
+  id 'java'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+            srcDir 'Generated JUIC files'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'lib', include: '*.jar')
+    compile fileTree(dir: 'lib/codecs', include: '*.jar')
+    compile fileTree(dir: 'lib/codecs/xuggle', include: '*.jar')
+    compile fileTree(dir: 'lib/jetty', include: '*.jar')
+    compile fileTree(dir: 'lib/mac', include: '*.jar')
+    compile fileTree(dir: 'lib/mining', include: '*.jar')
+    compile fileTree(dir: 'lib/mining/echonest', include: '*.jar')
+    compile fileTree(dir: 'lib/poi', include: '*.jar')
+    compile fileTree(dir: 'lib/qt', include: '*.jar')
+    compile fileTree(dir: 'lib/quicktime', include: '*.zip')
+    compile fileTree(dir: 'lib/quicktime/mac', include: '*.jar')
+    compile fileTree(dir: 'lib/tagging', include: '*.jar')
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId project.group
+            artifactId project.name
+            version project.version
+            from components.java
+            artifact sourceJar {
+                classifier "sources"
+            }
+            artifact shadowJar
+        }
+    }
+}
