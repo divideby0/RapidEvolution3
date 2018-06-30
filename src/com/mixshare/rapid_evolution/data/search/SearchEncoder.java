@@ -19,7 +19,7 @@ public class SearchEncoder {
             if (Character.isLetterOrDigit(character) || (includeSpaces && (character == ' '))) {
             	character = Character.toLowerCase(character);
             	// temp code until a more complete solution is found
-            	if (character == '�')
+            	if (character == 'ï¿½')
             		character = 'o';
                 encoded.append(character);
             }
@@ -62,7 +62,7 @@ public class SearchEncoder {
     }
     
     static public void main(String[] args) {
-    	System.out.println(encodeString("Trentem�ller"));
+    	System.out.println(encodeString("Trentemï¿½ller"));
     }
 	
 }
